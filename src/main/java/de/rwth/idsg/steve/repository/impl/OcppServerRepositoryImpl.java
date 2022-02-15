@@ -170,7 +170,8 @@ public class OcppServerRepositoryImpl implements OcppServerRepository {
                 int connectorPk = getConnectorPkFromConnector(ctx, chargeBoxIdentity, connectorId);
                 batchInsertMeterValues(ctx, list, connectorPk, transactionId);
             } catch (Exception e) {
-                log.error("Exception occurred", e);
+                log.error("Exception occurred in insertMeterValues\n");
+                log.error(new Exception().initCause(e).getCause());
             }
         });
     }
@@ -194,7 +195,8 @@ public class OcppServerRepositoryImpl implements OcppServerRepository {
 
                 batchInsertMeterValues(ctx, list, connectorPk, transactionId);
             } catch (Exception e) {
-                log.error("Exception occurred", e);
+                log.error("Exception occurred in insertMeterValues\n");
+                log.error(new Exception().initCause(e).getCause());
             }
         });
     }
@@ -270,7 +272,8 @@ public class OcppServerRepositoryImpl implements OcppServerRepository {
                .set(TRANSACTION_STOP.STOP_REASON, p.getStopReason())
                .execute();
         } catch (Exception e) {
-            log.error("Exception occurred", e);
+            log.error("Exception occurred in updateTransaction\n");
+            log.error(new Exception().initCause(e).getCause());
             tryInsertingFailed(p, e);
         }
 
@@ -363,7 +366,8 @@ public class OcppServerRepositoryImpl implements OcppServerRepository {
                .set(CONNECTOR_STATUS.ERROR_CODE, statusUpdate.getErrorCode())
                .execute();
         } catch (Exception e) {
-            log.error("Exception occurred", e);
+            log.error("Exception occurred in insertConnectorStatus\n");
+            log.error(new Exception().initCause(e).getCause());
         }
     }
 
@@ -455,7 +459,8 @@ public class OcppServerRepositoryImpl implements OcppServerRepository {
                .execute();
         } catch (Exception ex) {
             // This is where we give up and just log
-            log.error("Exception occurred", e);
+            log.error("Exception occurred in tryInsertingFailed\n");
+            log.error(new Exception().initCause(e).getCause());
         }
     }
 

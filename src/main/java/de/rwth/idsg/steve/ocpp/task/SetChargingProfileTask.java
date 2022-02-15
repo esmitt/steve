@@ -112,7 +112,8 @@ public class SetChargingProfileTask extends Ocpp16AndAboveTask<EnhancedSetChargi
             try {
                 success(chargeBoxId, res.get().getStatus().value());
             } catch (Exception e) {
-                failed(chargeBoxId, e);
+                System.out.println("Error with charger "+chargeBoxId+": " +e.getMessage());
+                //failed(chargeBoxId, e);
             }
         };
     }

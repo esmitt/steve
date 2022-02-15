@@ -47,7 +47,7 @@ public class OcppWebSocketUpgrader extends Jetty10RequestUpgradeStrategy {
     @Override
     public void upgrade(ServerHttpRequest request, ServerHttpResponse response,
                         String selectedProtocol, List<WebSocketExtension> selectedExtensions, Principal user,
-                        WebSocketHandler wsHandler, Map<String, Object> attributes) throws HandshakeFailureException {
+                        WebSocketHandler wsHandler, Map<String, Object> attributes){
 
         // -------------------------------------------------------------------------
         // 1. Check the chargeBoxId
@@ -62,7 +62,9 @@ public class OcppWebSocketUpgrader extends Jetty10RequestUpgradeStrategy {
         if (allowConnection) {
             attributes.put(AbstractWebSocketEndpoint.CHARGEBOX_ID_KEY, chargeBoxId);
         } else {
-            throw new HandshakeFailureException("ChargeBoxId '" + chargeBoxId + "' is not recognized.");
+            //throw new HandshakeFailureException("ChargeBoxId '" + chargeBoxId + "' is not recognized.");
+            System.out.println("ChargeBoxId '" + chargeBoxId + "' is not recognized.");
+            return;
         }
 
         // -------------------------------------------------------------------------
@@ -70,13 +72,17 @@ public class OcppWebSocketUpgrader extends Jetty10RequestUpgradeStrategy {
         // -------------------------------------------------------------------------
 
         if (selectedProtocol == null) {
-            throw new HandshakeFailureException("No protocol (OCPP version) is specified.");
+            //throw new HandshakeFailureException("No protocol (OCPP version) is specified.");
+            System.out.println("No protocol (OCPP version) is specified.");
+            return;
         }
 
         AbstractWebSocketEndpoint endpoint = findEndpoint(selectedProtocol);
 
         if (endpoint == null) {
-            throw new HandshakeFailureException("Requested protocol '" + selectedProtocol + "' is not supported");
+            //throw new HandshakeFailureException("Requested protocol '" + selectedProtocol + "' is not supported");
+            System.out.println("Requested protocol '" + selectedProtocol + "' is not supported");
+            return;
         }
 
         super.upgrade(request, response, selectedProtocol, selectedExtensions, user, endpoint, attributes);

@@ -9,7 +9,7 @@ services:
   db:
     image: mariadb:10.4
     ports:
-      - 3306:3306
+      - 3307:3307
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
       MYSQL_DATABASE: stevedb
